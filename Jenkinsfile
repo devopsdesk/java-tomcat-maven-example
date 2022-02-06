@@ -14,5 +14,11 @@ pipeline{
             sh 'mvn -B -DskipTests clean install'
           }
         }
-      }
+         stage('Push Docker Image'){
+        withCredentials([string(credentialsId: 'Docker_Hub_Pwd', variable: 'Docker_Hub_Pwd')]) {
+          sh "docker login -u devopsdesk -p ${Docker_Hub_Pwd}"
+        }
+        sh 'docker push devopsdesk/java-web-app:v1'
+     }     
     }
+   }
