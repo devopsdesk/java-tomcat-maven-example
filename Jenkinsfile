@@ -28,9 +28,10 @@ pipeline{
      }  
          }
            stage('Run Docker Image In Dev Server'){
+             steps{
         
         def dockerRun = ' docker run  -d -p 8080:8080 --name java-web-app devopsdesk/java-web-app'
-             steps{
+             
          sshagent(['DOCKER_SERVER']) {
           sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.233.252.164 docker stop java-web-app || true'
           sh 'ssh  ec2-user@13.233.252.164 docker rm java-web-app || true'
